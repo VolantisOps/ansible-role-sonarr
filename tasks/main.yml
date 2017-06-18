@@ -1,0 +1,43 @@
+---
+- name: Allow sonarr web port
+  ufw:
+    rule: allow
+    port: "{{ sonarr_port }}"
+    proto: tcp
+  when: sonarr_manage_ufw
+
+- name: Allow sonarr SSL web port
+  ufw:
+    rule: allow
+    port: "{{ sonarr_ssl_port }}"
+    proto: tcp
+  when: sonarr_enable_ssl and sonarr_manage_ufw
+
+- name: Install sonarr from aur
+  aur: name=sonarr
+  become: yes
+  become_user: "{{ sonarr_build_user }}"
+  notify: restart sonarr
+
+- name: Add sonarr user to additional groups
+  user: "name=sonarr groups={{ sonarr_additional_groups }} append=yes"
+  when: "sonarr_additional_groups != ''"
+
+- name: Ensure sonarr data directory exists
+  file: 
+    path: /var/lib/sonarr
+    state: directory
+    owner: sonarr
+    group: sonarr
+
+- name: Install sonarr config file
+  template:
+    src: config.xml.j2
+    dest: /var/lib/sonarr/config.xml
+    owner: sonarr
+    group: sonarr
+    mode: 0644
+  notify: restart sonarr
+
+- name: Ensure sonarr is running
+  service: "name=sonarr state=started enabled=yes"

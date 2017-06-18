@@ -1,0 +1,14 @@
+<Config>
+  <LogLevel>Info</LogLevel>
+  <Port>{{ sonarr_port }}</Port>
+  <UrlBase></UrlBase>
+  <BindAddress>{{ sonarr_bind_address }}</BindAddress>
+  <SslPort>{{ sonarr_ssl_port }}</SslPort>
+  <EnableSsl>{% if sonarr_enable_ssl %}True{% else %}False{% endif %}</EnableSsl>
+  <ApiKey>{{ sonarr_api_key }}</ApiKey>
+  <AuthenticationMethod>{% if sonarr_password_set %}{{ sonarr_authentication_method }}{% else %}None{% endif %}</AuthenticationMethod>
+  <Branch>master</Branch>
+  <LaunchBrowser>False</LaunchBrowser>
+  <SslCertHash></SslCertHash>
+  <UpdateMechanism>BuiltIn</UpdateMechanism>
+</Config>

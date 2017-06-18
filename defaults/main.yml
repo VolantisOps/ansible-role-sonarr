@@ -1,0 +1,11 @@
+---
+sonarr_api_key: ''
+sonarr_bind_address: '*'
+sonarr_port: 8989
+sonarr_ssl_port: 9898
+sonarr_enable_ssl: false
+sonarr_authentication_method: Forms
+sonarr_password_set: false # Set to true after you configure sonarr
+sonarr_manage_ufw: false
+sonarr_additional_groups: '' # Comma-separated list of group names
+sonarr_build_user: pacaur-builder
